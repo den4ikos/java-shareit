@@ -1,12 +1,21 @@
 package ru.practicum.shareit.user;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.mappers.UserDtoMapper;
 
-/**
- * TODO Sprint add-controllers.
- */
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/users")
+@RequiredArgsConstructor
 public class UserController {
+    private final UserDtoMapper mapper;
+
+    @PostMapping
+    @ResponseBody
+    public UserDto create(@Valid @RequestBody User user) {
+        return mapper.toDto(user);
+    }
 }
