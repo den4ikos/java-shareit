@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.dto.UserDto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 public class UserDtoMapper {
     private Long userDtoId;
@@ -22,6 +25,11 @@ public class UserDtoMapper {
         String name = user.getName();
         String email = user.getEmail();
 
-        return new UserDto(id, name, email);
+        UserDto udto =  new UserDto();
+        udto.setId(id);
+        udto.setName(name);
+        udto.setEmail(email);
+
+        return udto;
     }
 }
