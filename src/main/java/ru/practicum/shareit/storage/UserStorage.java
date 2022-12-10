@@ -21,6 +21,7 @@ public class UserStorage implements UserStorageInterface {
             id++;
         }
     }
+
     @Override
     public User create(User user) {
         setId();

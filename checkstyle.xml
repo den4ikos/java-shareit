@@ -45,7 +45,6 @@
 			<property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT, INSTANCE_INIT"/>
 		</module>
 		<module name="WhitespaceAround">
-			<property name="severity" value="ignore"/>
 			<property name="allowEmptyConstructors" value="true"/>
 			<property name="allowEmptyMethods" value="true"/>
 			<property name="allowEmptyTypes" value="true"/>
@@ -62,7 +61,6 @@
 		<module name="UpperEll"/>
 		<module name="ModifierOrder"/>
 		<module name="EmptyLineSeparator">
-			<property name="severity" value="ignore"/>
 			<property name="tokens"
 					  value="IMPORT,CLASS_DEF,ENUM_DEF,INTERFACE_DEF,CTOR_DEF,METHOD_DEF,STATIC_INIT,INSTANCE_INIT,VARIABLE_DEF"/>
 			<property name="allowNoEmptyLineBetweenFields" value="true"/>
@@ -140,7 +138,6 @@
 		</module>
 		<!-- No trailing whitespace -->
 		<module name="Regexp">
-			<property name="severity" value="ignore"/>
 			<property name="format" value="[ \t]+$"/>
 			<property name="illegalPattern" value="true"/>
 			<property name="message" value="Trailing whitespace"/>
@@ -172,7 +169,6 @@
 		<module name="UnusedImports"/>
 		<module name="MethodParamPad"/>
 		<module name="NoWhitespaceBefore">
-			<property name="severity" value="ignore"/>
 			<property name="allowLineBreaks" value="true"/>
 			<property name="tokens" value="COMMA, SEMI, POST_INC, POST_DEC, DOT, ELLIPSIS, METHOD_REF"/>
 		</module>
