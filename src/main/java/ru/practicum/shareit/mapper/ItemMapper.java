@@ -13,7 +13,7 @@ public class ItemMapper {
                 item.getOwner(),
                 item.getRequest()
         );
-    };
+    }
     public static Item toItem(ItemDto item) {
         return new Item(
                 item.getId(),
