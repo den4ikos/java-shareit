@@ -62,6 +62,7 @@
 		<module name="UpperEll"/>
 		<module name="ModifierOrder"/>
 		<module name="EmptyLineSeparator">
+			<property name="severity" value="ignore"/>
 			<property name="tokens"
 					  value="IMPORT,CLASS_DEF,ENUM_DEF,INTERFACE_DEF,CTOR_DEF,METHOD_DEF,STATIC_INIT,INSTANCE_INIT,VARIABLE_DEF"/>
 			<property name="allowNoEmptyLineBetweenFields" value="true"/>
