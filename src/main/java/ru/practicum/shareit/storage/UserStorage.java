@@ -14,9 +14,17 @@ import java.util.Optional;
 public class UserStorage implements UserStorageInterface {
     private List<User> users = new ArrayList<>();
     private Long id;
+
+    public void setId() {
+        if (id == null || id == 0) {
+            id = 1L;
+        } else {
+            id++;
+        }
+    }
     @Override
     public User create(User user) {
-        getId();
+        setId();
         user.setId(id);
         users.add(user);
 
@@ -46,13 +54,5 @@ public class UserStorage implements UserStorageInterface {
         return users.stream()
                 .filter(u -> u.getId().equals(userId))
                 .findFirst();
-    }
-
-    private void getId() {
-        if (id == null || id == 0) {
-            id = 1L;
-        } else {
-            id++;
-        }
     }
 }
