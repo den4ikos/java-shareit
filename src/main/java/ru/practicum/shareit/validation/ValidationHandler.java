@@ -1,6 +1,6 @@
 package ru.practicum.shareit.validation;
 
-import ru.practicum.shareit.storages.user.UserStorageInterface;
+import ru.practicum.shareit.storage.user.UserStorageInterface;
 import ru.practicum.shareit.user.User;
 
 public class ValidationHandler {

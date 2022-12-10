@@ -1,9 +1,9 @@
-package ru.practicum.shareit.services;
+package ru.practicum.shareit.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.ValidationException;
-import ru.practicum.shareit.storages.user.UserStorageInterface;
+import ru.practicum.shareit.storage.user.UserStorageInterface;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.validation.ValidationHandler;
 
