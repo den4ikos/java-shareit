@@ -41,4 +41,10 @@ public class ErrorHandlerController {
     public Map<String, String> handleValidationException(final ValidationException e) {
         return Map.of("validationError", e.getMessage());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(NOT_FOUND)
+    public Map<String, String> handleNotFoundException(final NotFoundException e) {
+        return Map.of("validationError", e.getMessage());
+    }
 }

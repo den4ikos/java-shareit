@@ -1,6 +1,7 @@
 package ru.practicum.shareit.storage;
 
 import org.springframework.stereotype.Component;
+import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.storage.user.UserStorageInterface;
 import ru.practicum.shareit.user.User;
@@ -24,7 +25,7 @@ public class UserStorage implements UserStorageInterface {
 
     @Override
     public User update(User user) {
-        User currentUser = getById(user.getId()).orElseThrow(() -> new ValidationException("User not found"));
+        User currentUser = getById(user.getId()).orElseThrow(() -> new NotFoundException("User not found"));
         currentUser.setName(user.getName() != null ? user.getName() : currentUser.getName());
         currentUser.setEmail(user.getEmail() != null ? user.getEmail() : currentUser.getEmail());
         return currentUser;

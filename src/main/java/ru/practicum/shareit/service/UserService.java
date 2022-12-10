@@ -2,6 +2,7 @@ package ru.practicum.shareit.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.storage.user.UserStorageInterface;
 import ru.practicum.shareit.user.User;
@@ -29,11 +30,11 @@ public class UserService {
     }
 
     public User getById(Long userId) {
-        return storage.getById(userId).orElseThrow(() -> new ValidationException("User not found!"));
+        return storage.getById(userId).orElseThrow(() -> new NotFoundException("User not found!"));
     }
 
     public void delete(Long userId) {
-        User user = storage.getById(userId).orElseThrow(() -> new ValidationException("User Not found!"));
+        User user = storage.getById(userId).orElseThrow(() -> new NotFoundException("User Not found!"));
         storage.delete(user);
     }
 
