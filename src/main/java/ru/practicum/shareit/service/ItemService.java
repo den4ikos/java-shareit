@@ -8,10 +8,7 @@ import ru.practicum.shareit.storage.item.ItemStorageInterface;
 import ru.practicum.shareit.user.User;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
