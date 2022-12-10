@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 @Component
 public class ItemStorage implements ItemStorageInterface {
-
     private List<Item> items = new ArrayList<>();
 
     private Long id;
@@ -26,6 +25,7 @@ public class ItemStorage implements ItemStorageInterface {
             id++;
         }
     }
+
     @Override
     public Item create(Item item) {
         setId();

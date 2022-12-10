@@ -22,7 +22,7 @@ public class UserService {
         return storage.create(user);
     }
 
-    public User update (User user) {
+    public User update(User user) {
         if (ValidationHandler.checkUserEmail(user, storage)) {
             throw new ValidationException("Email must be unique!");
         }
