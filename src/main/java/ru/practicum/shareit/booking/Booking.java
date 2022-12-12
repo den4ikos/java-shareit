@@ -11,10 +11,10 @@ public class Booking {
 
     private Long id;
 
-    @DateTimeFormat
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime start;
 
-    @DateTimeFormat
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime end;
 
     private Long item;

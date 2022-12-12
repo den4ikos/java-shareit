@@ -17,14 +17,14 @@ public class UserService {
 
     public User create(User user) {
         if (ValidationHandler.checkUserEmail(user, storage)) {
-            throw new ValidationException("Email must be unique!");
+            throw new ValidationException("Email '" + user.getEmail() + "' must be unique!");
         }
         return storage.create(user);
     }
 
     public User update(User user) {
         if (ValidationHandler.checkUserEmail(user, storage)) {
-            throw new ValidationException("Email must be unique!");
+            throw new ValidationException("Email '" + user.getEmail() + "' must be unique!");
         }
         return storage.update(user);
     }

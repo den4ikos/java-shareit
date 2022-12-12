@@ -18,6 +18,6 @@ public class ItemRequest {
 
     private Long requestor;
 
-    @DateTimeFormat
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime created;
 }
