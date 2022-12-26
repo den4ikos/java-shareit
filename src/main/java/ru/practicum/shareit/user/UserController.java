@@ -31,6 +31,7 @@ public class UserController {
         log.info("Endpoint request received: 'PATCH /users with user: {} and userId: {}'", user.toString(), userId);
         user.setId(userId);
         User u = UserMapper.toUser(user);
+        System.out.println(u);
         User updatedUser = service.update(u);
         return UserMapper.toDto(updatedUser);
     }
