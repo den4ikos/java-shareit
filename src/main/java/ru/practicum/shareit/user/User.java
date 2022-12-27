@@ -24,6 +24,7 @@ public class User {
     @Column
     private String name;
 
+    @NotNull
     @Email(message = "Please provide a valid email address")
     @Column
     private String email;

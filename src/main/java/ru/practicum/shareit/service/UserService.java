@@ -20,21 +20,16 @@ public class UserService {
         if (id == null || id == 0) {
             id = 1L;
         } else {
-            // ооой ну и жесть...
-            if (id.equals(1L)) {
-                id = 3L;
-            } else {
-                id++;
-            }
+            id++;
         }
     }
 
     public User create(User user) {
+        setId();
+        user.setId(id);
         if (ValidationHandler.checkUserEmail(user, storage)) {
             throw new ValidationException("Email '" + user.getEmail() + "' must be unique!");
         }
-        setId();
-        user.setId(id);
         return storage.save(user);
     }
 
@@ -46,15 +41,33 @@ public class UserService {
     }
 
     public User getById(Long userId) {
-        return storage.findUserById(userId).orElseThrow(() -> new NotFoundException("User not found!"));
+        return storage.findById(userId).orElseThrow(() -> new NotFoundException("User not found!"));
     }
 
     public void delete(Long userId) {
-        User user = storage.findUserById(userId).orElseThrow(() -> new NotFoundException("User Not found!"));
+        User user = storage.findById(userId).orElseThrow(() -> new NotFoundException("User Not found!"));
         storage.delete(user);
     }
 
     public List<User> getAll() {
         return storage.findAll();
+    }
+
+    public User setFieldsToUpdate(User currentUser, User requestedUser) {
+        User newUser = new User();
+        newUser.setId(currentUser.getId());
+        if (requestedUser.getName() != null) {
+            newUser.setName(requestedUser.getName());
+        } else {
+            newUser.setName(currentUser.getName());
+        }
+
+        if (requestedUser.getEmail() != null) {
+            newUser.setEmail(requestedUser.getEmail());
+        } else {
+            newUser.setEmail(currentUser.getEmail());
+        }
+
+        return newUser;
     }
 }

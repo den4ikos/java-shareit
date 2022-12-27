@@ -8,7 +8,7 @@ import java.util.Optional;
 @SuppressWarnings("checkstyle:Regexp")
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findUserById(Long id);
-
+    Optional<User> findUserByEmailAndIdNot(String email, Long id);
+    @SuppressWarnings("checkstyle:EmptyLineSeparator")
     Optional<User> findUserByEmail(String email);
 }

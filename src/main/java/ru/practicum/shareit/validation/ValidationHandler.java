@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class ValidationHandler {
     public static boolean checkUserEmail(User user, UserRepository storage) {
-        Optional<User> u = storage.findUserByEmail(user.getEmail());
+        Optional<User> u = storage.findUserByEmailAndIdNot(user.getEmail(), user.getId());
         return u.isPresent();
     }
 }
