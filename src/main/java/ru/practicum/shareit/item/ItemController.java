@@ -63,9 +63,9 @@ public class ItemController {
     @PatchMapping(value = "/{itemId}")
     @ResponseBody
     public ItemDto update(@RequestBody ItemDto item, @RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long itemId) {
-        log.info("Endpoint request received: 'PATCH with item: {} and userId: {} and itemId: {}'", item.toString(), userId, itemId);
         User user = userService.getById(userId);
         item.setId(itemId);
+        log.info("Endpoint request received: 'PATCH with item: {} and userId: {} and itemId: {}'", item.toString(), userId, itemId);
         Item itemFromDto = itemService.update(ItemMapper.toItem(item), user);
 
         return ItemMapper.toDto(itemFromDto);
