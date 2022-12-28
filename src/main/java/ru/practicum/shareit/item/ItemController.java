@@ -54,8 +54,8 @@ public class ItemController {
     public ItemDto create(@Valid @RequestBody ItemDto item, @RequestHeader(Constants.HEADER_USER_ID) Long userId) {
         log.info("Endpoint request received: 'POST with item: {} and userId: {}'", item.toString(), userId);
         User user = userService.getById(userId);
+        item.setOwner(user);
         Item itemFromDto = itemService.create(ItemMapper.toItem(item));
-        itemFromDto.setOwner(user);
 
         return ItemMapper.toDto(itemFromDto);
     }
@@ -64,9 +64,12 @@ public class ItemController {
     @ResponseBody
     public ItemDto update(@RequestBody ItemDto item, @RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long itemId) {
         User user = userService.getById(userId);
+        Item oldItem = itemService.getById(itemId);
+        itemService.checkUserForItem(oldItem, user);
         item.setId(itemId);
-        log.info("Endpoint request received: 'PATCH with item: {} and userId: {} and itemId: {}'", item.toString(), userId, itemId);
-        Item itemFromDto = itemService.update(ItemMapper.toItem(item), user);
+        log.info("Endpoint request received: 'PATCH with item: {} and userId: {} and itemId: {}'", item, userId, itemId);
+        Item fillItem = itemService.setFieldsToUpdate(oldItem, item, user);
+        Item itemFromDto = itemService.update(fillItem, user);
 
         return ItemMapper.toDto(itemFromDto);
     }
