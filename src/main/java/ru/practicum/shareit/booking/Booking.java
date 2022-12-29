@@ -1,8 +1,11 @@
 package ru.practicum.shareit.booking;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.practicum.shareit.booking.validation.EnumStatusTypePattern;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 
@@ -11,6 +14,9 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "bookings", schema = "public")
 public class Booking {
     @Id
@@ -28,7 +34,7 @@ public class Booking {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "booker_id")
     private User booker;
-    @EnumStatusTypePattern
+    @Enumerated(EnumType.STRING)
     private StatusType status;
 
 }
