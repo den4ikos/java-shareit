@@ -39,18 +39,18 @@ public class ErrorHandlerController {
     @ExceptionHandler
     @ResponseStatus(CONFLICT)
     public Map<String, String> handleValidationException(final ValidationException e) {
-        return Map.of("validationError", e.getMessage());
+        return Map.of("error", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(NOT_FOUND)
     public Map<String, String> handleNotFoundException(final NotFoundException e) {
-        return Map.of("validationError", e.getMessage());
+        return Map.of("error", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(BAD_REQUEST)
     public Map<String, String> handleBadRequestException(final BadRequestException e) {
-        return Map.of("validationError", e.getMessage());
+        return Map.of("error", e.getMessage());
     }
 }

@@ -26,6 +26,7 @@ public class Item {
     @NotNull
     private String description;
     @NotNull
+    @Column(name = "is_available")
     private Boolean available;
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "owner_id")

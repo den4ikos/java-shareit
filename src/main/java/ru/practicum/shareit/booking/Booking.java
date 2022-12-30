@@ -22,10 +22,8 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "date_start")
     private LocalDateTime start;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "date_end")
     private LocalDateTime end;
     @ManyToOne(cascade = CascadeType.REMOVE)

@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.Constants;
+import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemDtoToUser;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.mapper.ItemMapper;
 import ru.practicum.shareit.service.ItemService;
@@ -25,19 +27,25 @@ public class ItemController {
     private final UserService userService;
 
     @GetMapping
-    public List<ItemDto> getAllItems(@RequestHeader(Constants.HEADER_USER_ID) Long userId) {
+    public List<ItemDtoToUser> getAllItems(@RequestHeader(Constants.HEADER_USER_ID) Long userId) {
         log.info("Endpoint request received: 'GET /items with userId: {}'", userId);
-        return itemService.getAllByUserId(userId)
-                .stream()
-                .map(ItemMapper::toDto)
-                .collect(Collectors.toList());
+        User user = userService.getById(userId);
+        return itemService.getUserItems(user);
     }
 
     @GetMapping(value = "/{itemId}")
-    public ItemDto getById(@PathVariable Long itemId) {
+    public ItemDtoToUser getById(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long itemId) {
         log.info("Endpoint request received: 'GET /items/{}'", itemId);
+        User user = userService.getById(userId);
         Item item = itemService.getById(itemId);
-        return ItemMapper.toDto(item);
+        if (!item.getOwner().getId().equals(user.getId())) {
+            return ItemMapper.toItemDtoToUser(item, itemService.getItemComments(item));
+        } else {
+            return itemService.getUserItems(user)
+                    .stream()
+                    .filter(i -> i.getId() == itemId)
+                    .findFirst().orElseThrow(() -> new NotFoundException("Items not found"));
+        }
     }
 
     @GetMapping(value = "/search")

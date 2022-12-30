@@ -3,6 +3,7 @@ package ru.practicum.shareit.mapper;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.StatusType;
 import ru.practicum.shareit.booking.dto.BookingDtoForUser;
+import ru.practicum.shareit.booking.dto.BookingDtoToOwnerItem;
 import ru.practicum.shareit.booking.dto.BookingDtoToUser;
 import ru.practicum.shareit.item.dto.ItemDtoForBookingDto;
 import ru.practicum.shareit.item.model.Item;
@@ -37,5 +38,15 @@ public class BookingMapper {
         booking.setEnd(bookingDtoForUser.getEnd());
         booking.setStatus(StatusType.WAITING);
         return booking;
+    }
+
+    public static BookingDtoToOwnerItem toBookingDtoToOwnerItemToUser(Booking booking) {
+        return new BookingDtoToOwnerItem(
+                booking.getId(),
+                booking.getBooker().getId(),
+                booking.getStatus(),
+                booking.getStart(),
+                booking.getEnd()
+        );
     }
 }
