@@ -85,16 +85,13 @@ public class BookingService {
                     bookingList = bookingRepository.findByItemOwnerIdOrderByEndDesc(user.getId());
                     break;
                 case PAST:
-                    bookingList = bookingRepository
-                            .findByItemOwnerIdAndStartIsBeforeAndEndIsBeforeOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
+                    bookingList = bookingRepository.findByItemOwnerIdAndStartIsBeforeAndEndIsBeforeOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
                     break;
                 case FUTURE:
-                    bookingList = bookingRepository
-                            .findByItemOwnerIdAndStartIsAfterAndEndIsAfterOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
+                    bookingList = bookingRepository.findByItemOwnerIdAndStartIsAfterAndEndIsAfterOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
                     break;
                 case CURRENT:
-                    bookingList = bookingRepository
-                            .findByItemOwnerIdAndStartIsBeforeAndEndIsAfterOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
+                    bookingList = bookingRepository.findByItemOwnerIdAndStartIsBeforeAndEndIsAfterOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
                     break;
                 default:
                     bookingList = bookingRepository.findByItemOwnerIdAndStatusEqualsOrderByEndDesc(user.getId(), state1);
