@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.StatusType;
-import ru.practicum.shareit.booking.validation.CustomValidation;
+import ru.practicum.shareit.booking.validation.CustomBookingValidation;
 import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.repository.BookingRepository;
@@ -30,10 +30,10 @@ public class BookingService {
         Booking booking = bookingRepository
                 .findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking not found!"));
-        CustomValidation.isOwnerCanChangeApproveBookingStatus(booking, user);
-        CustomValidation.isBookingStatusApproved(booking);
+        CustomBookingValidation.isOwnerCanChangeApproveBookingStatus(booking, user);
+        CustomBookingValidation.isBookingStatusApproved(booking);
         List<Booking> approvedAllBookings = bookingRepository.findByItemOwnerIdAndEndIsAfterAndStatusIs(user.getId(), LocalDateTime.now(), StatusType.APPROVED);
-        if (approved && CustomValidation.isApprovedBookings(approvedAllBookings, booking)) {
+        if (approved && CustomBookingValidation.isApprovedBookings(approvedAllBookings, booking)) {
             booking.setStatus(StatusType.APPROVED);
         } else {
             booking.setStatus(StatusType.REJECTED);
@@ -45,7 +45,7 @@ public class BookingService {
         Booking booking = bookingRepository
                 .findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking not found"));
-        CustomValidation.isUserAccessToBooking(booking, user);
+        CustomBookingValidation.isUserAccessToBooking(booking, user);
         return booking;
     }
 
@@ -61,10 +61,10 @@ public class BookingService {
                     bookingList = bookingRepository.findByBookerIdAndStartIsAfterAndEndIsAfterOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
                     break;
                 case PAST:
-                    bookingList = bookingRepository.findByItemOwnerIdAndStartIsBeforeAndEndIsBeforeOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
+                    bookingList = bookingRepository.findByBookerIdAndStartIsBeforeAndEndIsBeforeOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
                     break;
                 case CURRENT:
-                    bookingList = bookingRepository.findByItemOwnerIdAndStartIsBeforeAndEndIsAfterOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
+                    bookingList = bookingRepository.findByBookerIdAndStartIsBeforeAndEndIsAfterOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now());
                     break;
                 default:
                     bookingList = bookingRepository.findByBookerIdAndStatusEqualsOrderByEndDesc(user.getId(), status);

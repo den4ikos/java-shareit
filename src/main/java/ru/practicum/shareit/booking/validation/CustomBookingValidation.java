@@ -4,14 +4,13 @@ import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.StatusType;
 import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CustomValidation {
+public class CustomBookingValidation {
     public static void isItemAvailable(Item item) {
         if (!item.getAvailable()) {
             throw new BadRequestException("Item is not available!");

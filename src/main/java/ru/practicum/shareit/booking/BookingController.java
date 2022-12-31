@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.Constants;
 import ru.practicum.shareit.booking.dto.BookingDtoForUser;
 import ru.practicum.shareit.booking.dto.BookingDtoToUser;
-import ru.practicum.shareit.booking.validation.CustomValidation;
+import ru.practicum.shareit.booking.validation.CustomBookingValidation;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDtoToUser;
 import ru.practicum.shareit.item.model.Item;
@@ -33,16 +33,18 @@ public class BookingController {
     public BookingDtoToUser create(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @Valid @RequestBody BookingDtoForUser params) {
         User user = userService.getById(userId);
         Item item = itemService.getById(params.getItemId());
-        CustomValidation.isItemAvailable(item);
+        CustomBookingValidation.isItemAvailable(item);
+        log.info("Endpoint request received: 'POST with booking: {} and userId: {}'", params, userId);
         Booking booking = BookingMapper.toBooking(params, item, user);
-        CustomValidation.isStartCorrectly(booking);
-        CustomValidation.isItemFromMySelf(booking, user);
+        CustomBookingValidation.isStartCorrectly(booking);
+        CustomBookingValidation.isItemFromMySelf(booking, user);
         return BookingMapper.bookingDtoToUser(bookingService.create(booking));
     }
 
     @PatchMapping(value = "{bookingId}")
     public BookingDtoToUser update(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long bookingId, @RequestParam Boolean approved) {
         User user = userService.getById(userId);
+        log.info("Endpoint request received: 'PATCH with user: {} and bookingId: {} and approved: {}'", user, bookingId, approved);
         Booking booking = bookingService.updateStatus(user, bookingId, approved);
         return BookingMapper.bookingDtoToUser(booking);
     }
@@ -50,6 +52,7 @@ public class BookingController {
     @GetMapping
     public List<BookingDtoToUser> getAll(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @RequestParam(defaultValue = "ALL") String state) {
         User user = userService.getById(userId);
+        log.info("Endpoint request received: 'GET with user: {} and state: {}'", user, state);
         return bookingService.getAll(user, state)
                 .stream()
                 .map(BookingMapper::bookingDtoToUser)
@@ -59,6 +62,7 @@ public class BookingController {
     @GetMapping(value = "{bookingId}")
     public BookingDtoToUser findById(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long bookingId) {
         User user = userService.getById(userId);
+        log.info("Endpoint request received: 'GET with user: {} and bookingId: {}'", user, bookingId);
         Booking booking = bookingService.findById(user, bookingId);
         return BookingMapper.bookingDtoToUser(booking);
     }
@@ -66,6 +70,7 @@ public class BookingController {
     @GetMapping(value = "/owner")
     public List<BookingDtoToUser> getAllByOwner(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @RequestParam(defaultValue = "ALL") String state) {
         User user = userService.getById(userId);
+        log.info("Endpoint request received: 'GET with user: {} and bookingId: {}'", user, state);
         List<ItemDtoToUser> userItems = itemService.getUserItems(user);
         if (userItems.isEmpty()) {
             throw new NotFoundException("User has no any item");

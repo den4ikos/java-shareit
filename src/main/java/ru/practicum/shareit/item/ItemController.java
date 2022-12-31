@@ -4,11 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.Constants;
+import ru.practicum.shareit.comment.dto.CommentDto;
+import ru.practicum.shareit.comment.model.Comment;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoToUser;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.mapper.CommentMapper;
 import ru.practicum.shareit.mapper.ItemMapper;
+import ru.practicum.shareit.service.CommentService;
 import ru.practicum.shareit.service.ItemService;
 import ru.practicum.shareit.service.UserService;
 import ru.practicum.shareit.user.User;
@@ -25,6 +29,8 @@ import java.util.stream.Collectors;
 public class ItemController {
     private final ItemService itemService;
     private final UserService userService;
+
+    private final CommentService commentService;
 
     @GetMapping
     public List<ItemDtoToUser> getAllItems(@RequestHeader(Constants.HEADER_USER_ID) Long userId) {
@@ -80,5 +86,14 @@ public class ItemController {
         Item itemFromDto = itemService.update(fillItem, user);
 
         return ItemMapper.toDto(itemFromDto);
+    }
+
+    @PostMapping(value = "/{itemId}/comment")
+    public CommentDto addComment(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @Valid @RequestBody CommentDto params, @PathVariable Long itemId) {
+        User user = userService.getById(userId);
+        Item item = itemService.getById(itemId);
+        log.info("Endpoint request received: 'POST with user: {} and item: {} and comment: {}'", user, item, params);
+        Comment comment = commentService.save(user, item, params);
+        return CommentMapper.toCommentDto(comment);
     }
 }
