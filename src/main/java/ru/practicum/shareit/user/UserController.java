@@ -27,11 +27,11 @@ public class UserController {
 
     @PatchMapping(value = "/{userId}")
     @ResponseBody
-    public UserDto update(@Valid @RequestBody UserDto user, @PathVariable Long userId) {
-        log.info("Endpoint request received: 'PATCH /users with user: {} and userId: {}'", user.toString(), userId);
-        user.setId(userId);
+    public UserDto update(@RequestBody UserDto user, @PathVariable Long userId) {
+        User currentUser = service.getById(userId);
         User u = UserMapper.toUser(user);
-        User updatedUser = service.update(u);
+        log.info("Endpoint request received: 'PATCH /users with user: {} and userId: {}'", u.toString(), userId);
+        User updatedUser = service.update(service.setFieldsToUpdate(currentUser, u));
         return UserMapper.toDto(updatedUser);
     }
 
