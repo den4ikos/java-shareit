@@ -31,4 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
-db/shareit.trace.db
+db/*.db
