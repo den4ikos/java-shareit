@@ -15,6 +15,7 @@ import ru.practicum.shareit.mapper.CommentMapper;
 import ru.practicum.shareit.repository.BookingRepository;
 import ru.practicum.shareit.repository.CommentRepository;
 import ru.practicum.shareit.repository.ItemRepository;
+import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
@@ -131,5 +132,9 @@ public class ItemService {
     public List<CommentDto> getItemComments(Item item) {
         List<Comment> comments = commentRepository.findCommentsByItemId(item.getId());
         return comments.stream().map(CommentMapper::toCommentDto).collect(Collectors.toList());
+    }
+
+    public List<Item> getItemByRequest(ItemRequest request) {
+        return storage.findAllByRequestId(request.getId());
     }
 }
