@@ -1,6 +1,7 @@
 package ru.practicum.shareit.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.StatusType;
@@ -27,7 +28,7 @@ public class CommentService {
 
     public Comment save(User user, Item item, CommentDto comment) {
         CustomCommentValidation.isCommentForOwnItem(user, item);
-        List<Booking> bookings = bookingRepository.findByBookerIdAndStartIsBeforeAndEndIsBeforeOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now())
+        List<Booking> bookings = bookingRepository.findByBookerIdAndStartIsBeforeAndEndIsBeforeOrderByEndDesc(user.getId(), LocalDateTime.now(), LocalDateTime.now(), PageRequest.of(0, 1))
                 .stream()
                 .filter(b -> b.getStatus().equals(StatusType.APPROVED))
                 .collect(Collectors.toList());

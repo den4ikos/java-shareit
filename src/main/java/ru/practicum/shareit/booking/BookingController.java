@@ -18,6 +18,7 @@ import ru.practicum.shareit.user.User;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -50,10 +51,13 @@ public class BookingController {
     }
 
     @GetMapping
-    public List<BookingDtoToUser> getAll(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @RequestParam(defaultValue = "ALL") String state) {
+    public List<BookingDtoToUser> getAll(
+            @RequestHeader(Constants.HEADER_USER_ID) Long userId,
+            @RequestParam(defaultValue = "ALL") String state,
+            @RequestParam Map<String, Object> params) {
         User user = userService.getById(userId);
         log.info("Endpoint request received: 'GET with user: {} and state: {}'", user, state);
-        return bookingService.getAll(user, state)
+        return bookingService.getAll(user, state, params)
                 .stream()
                 .map(BookingMapper::bookingDtoToUser)
                 .collect(Collectors.toList());
@@ -68,14 +72,17 @@ public class BookingController {
     }
 
     @GetMapping(value = "/owner")
-    public List<BookingDtoToUser> getAllByOwner(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @RequestParam(defaultValue = "ALL") String state) {
+    public List<BookingDtoToUser> getAllByOwner(
+            @RequestHeader(Constants.HEADER_USER_ID) Long userId,
+            @RequestParam(defaultValue = "ALL") String state,
+            @RequestParam Map<String, Object> params) {
         User user = userService.getById(userId);
         log.info("Endpoint request received: 'GET with user: {} and bookingId: {}'", user, state);
         List<ItemDtoToUser> userItems = itemService.getUserItems(user);
         if (userItems.isEmpty()) {
             throw new NotFoundException("User has no any item");
         }
-        return bookingService.getAllForOwner(user, state)
+        return bookingService.getAllForOwner(user, state, params)
                 .stream()
                 .map(BookingMapper::bookingDtoToUser)
                 .collect(Collectors.toList());

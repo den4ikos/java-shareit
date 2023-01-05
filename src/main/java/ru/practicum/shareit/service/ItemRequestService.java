@@ -32,6 +32,6 @@ public class ItemRequestService {
     public List<ItemRequest> getAll(User user, Map<String, Object> params) {
         int from = ValidationHandler.getAttributeFromRequest(params, "from", 0, 0);
         int size = ValidationHandler.getAttributeFromRequest(params, "size", 10, 1);
-        return itemRequestRepository.findAllByRequestorIdIsNotOrderByCreatedDesc(user.getId(), PageRequest.of(from, size));
+        return itemRequestRepository.findAllByRequestorIdIsNotOrderByCreatedDesc(user.getId(), PageRequest.of(from / size, size));
     }
 }
