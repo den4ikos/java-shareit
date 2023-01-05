@@ -60,7 +60,7 @@ public class ItemService {
         return List.of();
     }
 
-    public Item setFieldsToUpdate(Item item, ItemDto itemFromRequest, User user) {
+    public Item setFieldsToUpdate(Item item, ItemDto itemFromRequest, User user, ItemRequest itemRequest) {
         Item i = new Item();
         i.setId(itemFromRequest.getId());
         if (itemFromRequest.getName() != null) {
@@ -79,8 +79,8 @@ public class ItemService {
             i.setAvailable(item.getAvailable());
         }
         i.setOwner(user);
-        if (itemFromRequest.getRequest() != null) {
-            i.setRequest(itemFromRequest.getRequest());
+        if (itemFromRequest.getRequestId() != null) {
+            i.setRequest(itemRequest);
         } else {
             i.setRequest(item.getRequest());
         }

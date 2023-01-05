@@ -12,7 +12,9 @@ import ru.practicum.shareit.item.dto.ItemDtoToUser;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.mapper.CommentMapper;
 import ru.practicum.shareit.mapper.ItemMapper;
+import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.service.CommentService;
+import ru.practicum.shareit.service.ItemRequestService;
 import ru.practicum.shareit.service.ItemService;
 import ru.practicum.shareit.service.UserService;
 import ru.practicum.shareit.user.User;
@@ -29,8 +31,8 @@ import java.util.stream.Collectors;
 public class ItemController {
     private final ItemService itemService;
     private final UserService userService;
-
     private final CommentService commentService;
+    private final ItemRequestService itemRequestService;
 
     @GetMapping
     public List<ItemDtoToUser> getAllItems(@RequestHeader(Constants.HEADER_USER_ID) Long userId) {
@@ -69,7 +71,12 @@ public class ItemController {
         log.info("Endpoint request received: 'POST with item: {} and userId: {}'", item.toString(), userId);
         User user = userService.getById(userId);
         item.setOwner(user);
-        Item itemFromDto = itemService.create(ItemMapper.toItem(item));
+        Item itemFromDto = itemService.create(ItemMapper.toItem(
+                item,
+                item.getRequestId() != null
+                        ? itemRequestService.getById(item.getRequestId())
+                        : null
+        ));
 
         return ItemMapper.toDto(itemFromDto);
     }
@@ -82,7 +89,8 @@ public class ItemController {
         itemService.checkUserForItem(oldItem, user);
         item.setId(itemId);
         log.info("Endpoint request received: 'PATCH with item: {} and userId: {} and itemId: {}'", item, userId, itemId);
-        Item fillItem = itemService.setFieldsToUpdate(oldItem, item, user);
+        ItemRequest itemRequest = item.getRequestId() != null ? itemRequestService.getById(item.getRequestId()) : null;
+        Item fillItem = itemService.setFieldsToUpdate(oldItem, item, user, itemRequest);
         Item itemFromDto = itemService.update(fillItem, user);
 
         return ItemMapper.toDto(itemFromDto);

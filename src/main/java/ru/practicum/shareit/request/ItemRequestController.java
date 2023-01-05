@@ -44,7 +44,7 @@ public class ItemRequestController {
     }
 
     @GetMapping(value = "/all")
-    public List<ItemRequestDto> getAll(@RequestHeader(Constants.HEADER_USER_ID) Long userId, Map<String, Object> params) {
+    public List<ItemRequestDto> getAll(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @RequestParam Map<String, Object> params) {
         User user = userService.getById(userId);
         List<ItemRequest> requests = itemRequestService.getAll(user, params);
         return requests.stream()
