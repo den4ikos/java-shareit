@@ -24,7 +24,7 @@ public class CustomBookingValidation {
     }
 
     public static void isItemFromMySelf(Booking booking, User user) {
-        if (booking.getItem().getOwner().getId().equals(user.getId())) {
+        if (booking.getItem().getOwner() != null && booking.getItem().getOwner().getId().equals(user.getId())) {
             throw new NotFoundException("You can't rent things from yourself");
         }
     }

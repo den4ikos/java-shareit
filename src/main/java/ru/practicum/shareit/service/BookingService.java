@@ -9,8 +9,6 @@ import ru.practicum.shareit.booking.validation.CustomBookingValidation;
 import ru.practicum.shareit.exception.BadRequestException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.repository.BookingRepository;
-import ru.practicum.shareit.repository.CommentRepository;
-import ru.practicum.shareit.repository.ItemRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.validation.ValidationHandler;
 
@@ -22,8 +20,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BookingService {
     private final BookingRepository bookingRepository;
-    private final ItemRepository itemRepository;
-    private final CommentRepository commentRepository;
 
     public Booking create(Booking booking) {
         return bookingRepository.save(booking);
