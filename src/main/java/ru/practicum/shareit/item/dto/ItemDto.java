@@ -2,7 +2,6 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.*;
 import org.springframework.lang.Nullable;
-import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
 import javax.validation.constraints.NotBlank;
