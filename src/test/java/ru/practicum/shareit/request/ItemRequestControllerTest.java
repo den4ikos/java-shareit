@@ -109,7 +109,7 @@ public class ItemRequestControllerTest {
             .andExpect(jsonPath("$[0].description", is("Test Description 2")))
             .andExpect(jsonPath("$[0].requestorId", is(2)));
     }
-    
+    @SuppressWarnings("checkstyle:EmptyLineSeparator")
     @Test
     void findAllRequestsAndReturnHttp200() throws Exception {
         params.put("from", "0");
