@@ -268,7 +268,7 @@ public class ItemControllerTest {
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200))
+                .andExpect(status().is(HttpStatus.OK.value()))
                 .andExpect(jsonPath("$.text", is("Test comment")))
                 .andExpect(jsonPath("$.itemId", is(1)));
     }
