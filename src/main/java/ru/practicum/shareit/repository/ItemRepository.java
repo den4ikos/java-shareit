@@ -11,4 +11,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query(value = "select * from items i where lower(i.name) like lower(concat('%', ?1, '%')) or lower(i.description) like lower(concat('%', ?1, '%')) and i.is_available=true", nativeQuery = true)
     List<Item> searchAllByParams(String text);
+
+    List<Item> findAllByRequestId(Long requestId);
 }

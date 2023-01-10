@@ -24,13 +24,13 @@ public class CustomBookingValidation {
     }
 
     public static void isItemFromMySelf(Booking booking, User user) {
-        if (booking.getItem().getOwner().getId().equals(user.getId())) {
+        if (booking.getItem().getOwner() != null && isOwnerIdEqualsUserId(booking, user)) {
             throw new NotFoundException("You can't rent things from yourself");
         }
     }
 
     public static void isOwnerCanChangeApproveBookingStatus(Booking booking, User user) {
-        if (!booking.getItem().getOwner().getId().equals(user.getId())) {
+        if (!isOwnerIdEqualsUserId(booking, user)) {
             throw new NotFoundException("Owner is not found with the right to update the ticket status");
         }
     }
@@ -56,8 +56,12 @@ public class CustomBookingValidation {
     }
 
     public static void isUserAccessToBooking(Booking booking, User user) {
-        if (!booking.getItem().getOwner().getId().equals(user.getId()) && !booking.getBooker().getId().equals(user.getId())) {
+        if (!isOwnerIdEqualsUserId(booking, user) && !booking.getBooker().getId().equals(user.getId())) {
             throw new NotFoundException("The user with the right to view the status of the request was not found");
         }
+    }
+
+    private static boolean isOwnerIdEqualsUserId(Booking booking, User user) {
+        return booking.getItem().getOwner().getId().equals(user.getId());
     }
 }
