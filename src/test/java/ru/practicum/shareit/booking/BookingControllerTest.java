@@ -26,10 +26,7 @@ import ru.practicum.shareit.user.User;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.*;
@@ -59,7 +56,7 @@ public class BookingControllerTest {
     private Map<String, Object> params;
 
     @BeforeEach
-    void beforeEach() {
+    public void beforeEach() {
         params = new LinkedHashMap<>();
         params.put("state", "FUTURE");
         params.put("from", "0");
@@ -108,7 +105,7 @@ public class BookingControllerTest {
     }
 
     @Test
-    void addNewBookingAndReturnHttp200WithId3AndStatusWaiting() throws Exception {
+    public void addNewBookingAndReturnHttp200WithId3AndStatusWaiting() throws Exception {
         when(userService.getById(anyLong())).thenReturn(booker);
         when(itemService.getById(1L)).thenReturn(ItemMapper.toItem(itemDto, null));
         when(bookingService.create(any(Booking.class))).thenReturn(BookingMapper.toBooking(bookingDtoForUser, item, booker));
@@ -127,7 +124,7 @@ public class BookingControllerTest {
     }
 
     @Test
-    void updateBookingAndReturnHttp200AndStatusApproved() throws Exception {
+    public void updateBookingAndReturnHttp200AndStatusApproved() throws Exception {
         when(userService.getById(anyLong())).thenReturn(owner);
         when(bookingService.updateStatus(owner, booking.getId(), true)).thenReturn(booking);
 
@@ -141,7 +138,7 @@ public class BookingControllerTest {
     }
 
     @Test
-    void findBookingAndReturnHttp200WithStatusApproved() throws Exception {
+    public void findBookingAndReturnHttp200WithStatusApproved() throws Exception {
         when(userService.getById(anyLong())).thenReturn(owner);
         when(bookingService.findById(owner, booking.getId())).thenReturn(booking);
 
@@ -155,9 +152,9 @@ public class BookingControllerTest {
     }
 
     @Test
-    void findBookingByCreatorAndReturnHttp200WithStatusApproved() throws Exception {
+    public void findBookingByCreatorAndReturnHttp200WithStatusApproved() throws Exception {
         when(userService.getById(3L)).thenReturn(booker);
-        when(bookingService.getAll(booker, params.get("state").toString(), params)).thenReturn(List.of(booking));
+        when(bookingService.getAll(booker, params.get("state").toString(), new HashMap<>())).thenReturn(List.of(booking));
 
         mockMvc.perform(get("/bookings/?state=FUTURE&from=0&size=1")
                 .header(Constants.HEADER_USER_ID, 3L)
@@ -169,7 +166,7 @@ public class BookingControllerTest {
     }
 
     @Test
-    void findBookingByOwnerAndReturnHttp200WithStatusApproved() throws Exception {
+    public void findBookingByOwnerAndReturnHttp200WithStatusApproved() throws Exception {
         when(userService.getById(1L)).thenReturn(owner);
         when(itemService.getUserItems(owner)).thenReturn(List.of(ItemMapper.toItemDtoToUser(item, Collections.emptyList())));
         when(bookingService.getAllForOwner(owner, params.get("state").toString(), params)).thenReturn(List.of(booking));

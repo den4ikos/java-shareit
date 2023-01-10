@@ -39,13 +39,13 @@ public class UserControllerTest {
     private UserDto userDto;
 
     @BeforeEach
-    void beforeEach() {
+    public void beforeEach() {
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         userDto = new UserDto(1L, "Kolya", "kolya@test.test");
     }
 
     @Test
-    void addNewUserAndReturnHttp200() throws Exception {
+    public void addNewUserAndReturnHttp200() throws Exception {
         when(userService.create(any())).thenReturn(UserMapper.toUser(userDto));
 
         mockMvc.perform(post("/users")
@@ -60,7 +60,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void tryToSaveUserWithNullEmailAndReturnHttp400() throws Exception {
+    public void tryToSaveUserWithNullEmailAndReturnHttp400() throws Exception {
         userDto.setEmail(null);
         mockMvc.perform(post("/users")
                 .content(objectMapper.writeValueAsString(userDto))
@@ -71,7 +71,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void tryToSaveUserWithBadEmailAndReturnHttp400() throws Exception {
+    public void tryToSaveUserWithBadEmailAndReturnHttp400() throws Exception {
         userDto.setEmail("testtestetst");
         mockMvc.perform(post("/users")
                 .content(objectMapper.writeValueAsString(userDto))
@@ -82,7 +82,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void getUserBuIdAndReturnHttp200() throws Exception {
+    public void getUserBuIdAndReturnHttp200() throws Exception {
         when(userService.getById(anyLong())).thenReturn(UserMapper.toUser(userDto));
         mockMvc.perform(get("/users/1")
                 .accept(MediaType.APPLICATION_JSON))
@@ -92,7 +92,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void getAllUsersWithLength1AndHttp200() throws Exception {
+    public void getAllUsersWithLength1AndHttp200() throws Exception {
         when(userService.getAll()).thenReturn(Stream.of(userDto).map(UserMapper::toUser).collect(Collectors.toList()));
 
         mockMvc.perform(get("/users")

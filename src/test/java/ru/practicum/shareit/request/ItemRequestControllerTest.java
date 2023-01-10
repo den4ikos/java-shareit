@@ -51,7 +51,7 @@ public class ItemRequestControllerTest {
     private Map<String, Object> params = new LinkedHashMap<>();
 
     @BeforeEach
-    void beforeEach() {
+    public void beforeEach() {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(controller)
                 .build();
@@ -73,7 +73,7 @@ public class ItemRequestControllerTest {
     }
 
     @Test
-    void addNewItemRequestAndReturnHttp200() throws Exception {
+    public void addNewItemRequestAndReturnHttp200() throws Exception {
         itemRequestDto.setId(1L);
         itemRequestDto.setDescription("Test Description 2");
         when(userService.getById(2L)).thenReturn(requestor);
@@ -92,7 +92,7 @@ public class ItemRequestControllerTest {
     }
 
     @Test
-    void findUserRequestAndReturnHttp200() throws Exception {
+    public void findUserRequestAndReturnHttp200() throws Exception {
         itemRequestDto.setId(1L);
         itemRequestDto.setDescription("Test Description 2");
         when(userService.getById(2L)).thenReturn(requestor);
@@ -111,7 +111,7 @@ public class ItemRequestControllerTest {
     }
     @SuppressWarnings("checkstyle:EmptyLineSeparator")
     @Test
-    void findAllRequestsAndReturnHttp200() throws Exception {
+    public void findAllRequestsAndReturnHttp200() throws Exception {
         params.put("from", "0");
         params.put("size", "1");
         itemRequestDto.setId(1L);
@@ -132,7 +132,7 @@ public class ItemRequestControllerTest {
     }
 
     @Test
-    void testFindUserRequest() throws Exception {
+    public void testFindUserRequest() throws Exception {
         itemRequestDto.setId(1L);
         itemRequestDto.setDescription("Test Description 2");
         when(userService.getById(2L)).thenReturn(requestor);

@@ -70,7 +70,7 @@ public class ItemControllerTest {
     private Map<String, Object> params;
 
     @BeforeEach
-    void beforeEach() {
+    public void beforeEach() {
         params = new LinkedHashMap<>();
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         itemDto = new ItemDto(
@@ -130,7 +130,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void addItemWithoutRequestAndReturnHttp200() throws Exception {
+    public void addItemWithoutRequestAndReturnHttp200() throws Exception {
         when(userService.getById(anyLong())).thenReturn(owner);
         when(itemService.create(any(Item.class))).thenReturn(ItemMapper.toItem(itemDto, null));
 
@@ -148,7 +148,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void addNewItemWithRequestAndReturnHttp200() throws Exception {
+    public void addNewItemWithRequestAndReturnHttp200() throws Exception {
         when(userService.getById(anyLong()))
                 .thenReturn(owner);
         when(itemRequestService.getById(anyLong()))
@@ -169,7 +169,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void updateItemAndReturnHttp200() throws Exception {
+    public void updateItemAndReturnHttp200() throws Exception {
         item1.setOwner(owner);
         when(userService.getById(anyLong()))
                 .thenReturn(owner);
@@ -193,7 +193,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void findItemAndReturnHttp200() throws Exception {
+    public void findItemAndReturnHttp200() throws Exception {
         List<Item> userItems = List.of(item1, item2, item3, item4);
         userItems.forEach(i1 -> i1.setOwner(owner));
         List<ItemDtoToUser> userItemsDto = userItems.stream()
@@ -216,7 +216,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void findUserItemsAndReturnHttp200() throws Exception {
+    public void findUserItemsAndReturnHttp200() throws Exception {
         List<Item> userItems = List.of(item1, item2, item3, item4);
         userItems.forEach(i1 -> i1.setOwner(owner));
         List<ItemDtoToUser> userItemsDto = userItems.stream()
@@ -237,7 +237,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void searchItemsByRequestParametersAndReturnHttp200() throws Exception {
+    public void searchItemsByRequestParametersAndReturnHttp200() throws Exception {
         params.put("text", "Testthing3");
         List<Item> userItems = List.of(item1, item2, item3, item4);
         item3.setOwner(owner);
@@ -254,7 +254,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    void addCommentToItemAndReturnHttp200() throws Exception {
+    public void addCommentToItemAndReturnHttp200() throws Exception {
         List<Item> userItems = List.of(item1, item2, item3, item4);
         userItems.forEach(i -> i.setOwner(owner));
         when(userService.getById(anyLong())).thenReturn(requestor);

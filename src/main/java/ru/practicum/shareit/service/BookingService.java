@@ -13,6 +13,7 @@ import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.validation.ValidationHandler;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,5 +107,12 @@ public class BookingService {
         } catch (RuntimeException e) {
             throw new BadRequestException(String.format("Unknown state: %s", state));
         }
+    }
+
+    public Map<String, Object> convertParamsToMap(Integer from, Integer size) {
+        return new HashMap<>(){{
+            put("from", Integer.toString(from));
+            put("size", Integer.toString(size));
+        }};
     }
 }

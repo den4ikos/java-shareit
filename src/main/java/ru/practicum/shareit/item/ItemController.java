@@ -71,12 +71,8 @@ public class ItemController {
         log.info("Endpoint request received: 'POST with item: {} and userId: {}'", item.toString(), userId);
         User user = userService.getById(userId);
         item.setOwner(user);
-        Item itemFromDto = itemService.create(ItemMapper.toItem(
-                item,
-                item.getRequestId() != null
-                        ? itemRequestService.getById(item.getRequestId())
-                        : null
-        ));
+        ItemRequest itemRequest = item.getRequestId() != null ? itemRequestService.getById(item.getRequestId()) : null;
+        Item itemFromDto = itemService.create(ItemMapper.toItem(item, itemRequest));
 
         return ItemMapper.toDto(itemFromDto);
     }
