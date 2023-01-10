@@ -18,7 +18,6 @@ import ru.practicum.shareit.user.User;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
