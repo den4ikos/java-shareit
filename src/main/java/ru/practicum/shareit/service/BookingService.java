@@ -110,7 +110,7 @@ public class BookingService {
     }
 
     public Map<String, Object> convertParamsToMap(Integer from, Integer size) {
-        return new HashMap<>(){{
+        return new HashMap<>() {{
             put("from", Integer.toString(from));
             put("size", Integer.toString(size));
         }};
