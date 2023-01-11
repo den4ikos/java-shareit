@@ -28,4 +28,9 @@ public class User {
     @Email(message = "Please provide a valid email address")
     @Column
     private String email;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 }

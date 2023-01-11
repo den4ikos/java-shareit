@@ -34,4 +34,12 @@ public class Item {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "request_id")
     private ItemRequest request;
+
+    public  Item(Long id, String name, String description, Boolean available, ItemRequest request) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.available = available;
+        this.request = request;
+    }
 }

@@ -17,7 +17,9 @@ import ru.practicum.shareit.service.UserService;
 import ru.practicum.shareit.user.User;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -50,10 +52,14 @@ public class BookingController {
     }
 
     @GetMapping
-    public List<BookingDtoToUser> getAll(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @RequestParam(defaultValue = "ALL") String state) {
+    public List<BookingDtoToUser> getAll(
+            @RequestHeader(Constants.HEADER_USER_ID) Long userId,
+            @RequestParam(defaultValue = "ALL") String state,
+            @RequestParam(required = false, defaultValue = "0") @Min(0) Integer from,
+            @RequestParam(required = false, defaultValue = "10") @Min(1) Integer size) {
         User user = userService.getById(userId);
         log.info("Endpoint request received: 'GET with user: {} and state: {}'", user, state);
-        return bookingService.getAll(user, state)
+        return bookingService.getAll(user, state, bookingService.convertParamsToMap(from, size))
                 .stream()
                 .map(BookingMapper::bookingDtoToUser)
                 .collect(Collectors.toList());
@@ -68,14 +74,17 @@ public class BookingController {
     }
 
     @GetMapping(value = "/owner")
-    public List<BookingDtoToUser> getAllByOwner(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @RequestParam(defaultValue = "ALL") String state) {
+    public List<BookingDtoToUser> getAllByOwner(
+            @RequestHeader(Constants.HEADER_USER_ID) Long userId,
+            @RequestParam(defaultValue = "ALL") String state,
+            @RequestParam Map<String, Object> params) {
         User user = userService.getById(userId);
         log.info("Endpoint request received: 'GET with user: {} and bookingId: {}'", user, state);
         List<ItemDtoToUser> userItems = itemService.getUserItems(user);
         if (userItems.isEmpty()) {
             throw new NotFoundException("User has no any item");
         }
-        return bookingService.getAllForOwner(user, state)
+        return bookingService.getAllForOwner(user, state, params)
                 .stream()
                 .map(BookingMapper::bookingDtoToUser)
                 .collect(Collectors.toList());
