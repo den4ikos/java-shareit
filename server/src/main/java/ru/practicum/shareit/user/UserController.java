@@ -19,8 +19,9 @@ public class UserController {
 
     @PostMapping
     @ResponseBody
-    public UserDto create(@Valid @RequestBody User user) {
-        User createdUser = service.create(user);
+    public UserDto create(@Valid @RequestBody UserDto user) {
+        System.out.println("FROM SERVER: " + user);
+        User createdUser = service.create(UserMapper.toUser(user));
         log.info("Endpoint request received: 'GET /users with user: {}'", user.toString());
         return UserMapper.toDto(createdUser);
     }
