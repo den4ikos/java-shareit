@@ -10,7 +10,7 @@ services:
       - server
       - db
     environment:
-      - SHAREIT_SERVER_URL=http://server:9090
+      - SHAREIT_SERVER_URL=http://localhost:9090
   server:
     build: server
     image: server
@@ -22,7 +22,13 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shareit
       - POSTGRES_DB=shareit
-      - POSTGRES_USER=shareit
+      - POSTGRES_USER=user1234
       - POSTGRES_PASSWORD=shareit
   db:
     image: postgres:13.7-alpine
+    volumes:
+      - /var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=shareit
+      - POSTGRES_USER=user1234
+      - POSTGRES_PASSWORD=shareit
