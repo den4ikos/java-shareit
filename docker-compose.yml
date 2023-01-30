@@ -10,7 +10,7 @@ services:
       - server
       - db
     environment:
-      - SHAREIT_SERVER_URL=http://localhost:9090
+      - SHAREIT_SERVER_URL=http://server:9090
   server:
     build: server
     image: server
@@ -26,6 +26,9 @@ services:
       - POSTGRES_PASSWORD=shareit
   db:
     image: postgres:13.7-alpine
+    container_name: shareit-db
+    ports:
+      - "6541:5432"
     volumes:
       - /var/lib/postgresql/data/
     environment:
