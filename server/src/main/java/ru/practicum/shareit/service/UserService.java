@@ -2,8 +2,8 @@ package ru.practicum.shareit.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.exception.ValidationException;
+import ru.practicum.shareit.exceptions.NotFoundException;
+import ru.practicum.shareit.exceptions.ValidationException;
 import ru.practicum.shareit.repository.UserRepository;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.validation.ValidationHandler;

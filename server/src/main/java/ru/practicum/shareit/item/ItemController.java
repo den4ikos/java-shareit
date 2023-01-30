@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.Constants;
 import ru.practicum.shareit.comment.dto.CommentDto;
 import ru.practicum.shareit.comment.model.Comment;
-import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoToUser;
 import ru.practicum.shareit.item.model.Item;
@@ -79,7 +79,11 @@ public class ItemController {
 
     @PatchMapping(value = "/{itemId}")
     @ResponseBody
-    public ItemDto update(@RequestBody ItemDto item, @RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long itemId) {
+    public ItemDto update(
+            @PathVariable Long itemId,
+            @RequestHeader(Constants.HEADER_USER_ID) Long userId,
+            @RequestBody ItemDto item
+    ) {
         User user = userService.getById(userId);
         Item oldItem = itemService.getById(itemId);
         itemService.checkUserForItem(oldItem, user);

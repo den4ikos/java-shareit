@@ -24,10 +24,9 @@ public class ItemController {
     }
 
     @PatchMapping(value = "/{itemId}")
-        public ResponseEntity<Object> updateItem(@RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long itemId,
-                                             @RequestBody ItemDto itemDto) {
+    public ResponseEntity<Object> updateItem(@RequestBody ItemDto itemDto, @RequestHeader(Constants.HEADER_USER_ID) Long userId, @PathVariable Long itemId) {
         if (itemDto.getName() == null && itemDto.getDescription() == null && itemDto.getAvailable() == null) {
-            throw new IllegalArgumentException("Поля значений пустые");
+            throw new IllegalArgumentException("Fields are empty");
         }
         return itemClient.updateItem(userId, itemId, itemDto);
     }

@@ -1,6 +1,6 @@
 package ru.practicum.shareit.validation;
 
-import ru.practicum.shareit.exception.BadRequestException;
+import ru.practicum.shareit.exceptions.BadRequestException;
 import ru.practicum.shareit.repository.UserRepository;
 import ru.practicum.shareit.user.User;
 import java.util.Map;

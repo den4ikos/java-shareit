@@ -1,6 +1,6 @@
 package ru.practicum.shareit.comment.validation;
 
-import ru.practicum.shareit.exception.BadRequestException;
+import ru.practicum.shareit.exceptions.BadRequestException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 

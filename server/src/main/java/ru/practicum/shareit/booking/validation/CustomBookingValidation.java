@@ -2,8 +2,8 @@ package ru.practicum.shareit.booking.validation;
 
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.StatusType;
-import ru.practicum.shareit.exception.BadRequestException;
-import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exceptions.BadRequestException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 

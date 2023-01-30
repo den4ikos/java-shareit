@@ -1,4 +1,4 @@
-package ru.practicum.shareit.exception;
+package ru.practicum.shareit.exceptions;
 
 @SuppressWarnings("checkstyle:WhitespaceAround")
 public class BadRequestException extends RuntimeException{

@@ -8,7 +8,7 @@ import ru.practicum.shareit.booking.StatusType;
 import ru.practicum.shareit.comment.dto.CommentDto;
 import ru.practicum.shareit.comment.model.Comment;
 import ru.practicum.shareit.comment.validation.CustomCommentValidation;
-import ru.practicum.shareit.exception.BadRequestException;
+import ru.practicum.shareit.exceptions.BadRequestException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.mapper.CommentMapper;
 import ru.practicum.shareit.repository.BookingRepository;

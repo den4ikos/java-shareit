@@ -7,7 +7,7 @@ import ru.practicum.shareit.Constants;
 import ru.practicum.shareit.booking.dto.BookingDtoForUser;
 import ru.practicum.shareit.booking.dto.BookingDtoToUser;
 import ru.practicum.shareit.booking.validation.CustomBookingValidation;
-import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDtoToUser;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.mapper.BookingMapper;
