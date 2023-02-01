@@ -33,6 +33,7 @@
 			<property name="ignoreComments" value="true"/>
 			<property name="message" value="Leading braces"/>
 		</module>
+
 		<module name="LeftCurly"/>
 		<module name="RightCurly">
 			<property name="id" value="RightCurlySame"/>
